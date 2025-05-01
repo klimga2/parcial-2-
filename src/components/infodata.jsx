@@ -15,26 +15,18 @@ export default function CardsInfo({
   speed,
 }) {
   return (
-    <Card>
+    <Card sx={{ backgroundColor: "black", color: "#fff" }}>
       <CardContent>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          Hp: {hp}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          ataque: {ataque}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          defensa: {defensa}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+        <Typography variant="body2">Hp: {hp}</Typography>
+        <Typography variant="body2">ataque: {ataque}</Typography>
+        <Typography variant="body2">defensa: {defensa}</Typography>
+        <Typography variant="body2">
           special-attack: {special_attack}
         </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+        <Typography variant="body2">
           special-defense: {special_defense}
         </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          speed: {speed}
-        </Typography>
+        <Typography variant="body2">speed: {speed}</Typography>
       </CardContent>
     </Card>
   );

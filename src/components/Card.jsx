@@ -6,14 +6,23 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CardsInfo from "./infodata";
+import Pelea from "./Pelea";
 export default function Cards({ img, nombre, Stats }) {
   console.log(Stats);
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        backgroundColor: "black",
+        color: "#fff",
+        borderRadius: "20px",
+        boxShadow: "#fff",
+      }}
+    >
       <CardMedia sx={{ height: 240 }} image={img} title="green iguana" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Nombre: {nombre}
+          Pokemon: {nombre}
         </Typography>
       </CardContent>
       <div>

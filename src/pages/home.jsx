@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Cards from "../components/Card";
-
+import { useNavigate } from "react-router-dom";
 function Home() {
-  us;
-  const [DataPokemons, setDataPokemos] = useState("");
+  const Naveg = useNavigate();
+  const [DataPokemons, setDataPokemos] = useState("hola");
   console.log(DataPokemons);
 
   const [Imput, setImput] = useState("");
   const [loading, setloading] = useState(true);
   const [Stats, setStast] = useState();
+
   const input = (e) => {
     setImput(e.target.value);
   };
@@ -22,6 +23,9 @@ function Home() {
         console.log(data);
         setloading(false);
       });
+  };
+  const PasarPaguina = () => {
+    Naveg(`/batalla/${Imput}`);
   };
 
   return (
@@ -38,7 +42,7 @@ function Home() {
             nombre={DataPokemons.name}
             Stats={Stats}
           />
-          <button>Guardar pokemon</button>
+          <button onClick={PasarPaguina}>Guardar pokemon</button>
         </div>
       )}
     </>
