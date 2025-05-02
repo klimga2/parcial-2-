@@ -3,8 +3,7 @@ import Cards from "../components/Card";
 import { useNavigate } from "react-router-dom";
 function Home() {
   const Naveg = useNavigate();
-  const [DataPokemons, setDataPokemos] = useState("hola");
-  console.log(DataPokemons);
+  const [DataPokemons, setDataPokemos] = useState(null);
 
   const [Imput, setImput] = useState("");
   const [loading, setloading] = useState(true);

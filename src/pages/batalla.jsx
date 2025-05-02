@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Cards from "../components/Card";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Pelea from "../components/Pelea";
 
 function Batalla() {
+  const Naveg = useNavigate();
   const Pokemonelegifo = useParams();
 
   const [DataPokemons, setDataPokemos] = useState("");
@@ -20,7 +21,7 @@ function Batalla() {
   const [loading, setloading] = useState(true);
 
   const [PokemonGandor, setPokemonGanador] = useState();
-
+  const [PokemonesGandores, setPokemonesGandores] = useState([]);
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${Pokemonelegifo.Pokemonelegifo}`)
       .then((res) => res.json())
@@ -78,8 +79,10 @@ function Batalla() {
   }
   const tu = [];
   function guardar() {
-    tu.push(PokemonGandor);
+    setPokemonesGandores(tu.push(PokemonGandor));
     console.log(tu);
+    localStorage.setItem("Ganadores", JSON.stringify(tu));
+    Naveg("/Ranking");
   }
 
   const input = (e) => {
@@ -109,7 +112,8 @@ function Batalla() {
             Hp={PokemonGandor.stats[0].base_stat}
             Ataque={PokemonGandor.stats[1].base_stat}
           />
-          <button onClick={guardar}>Agregar</button>
+          <button onClick={guardar}>Ranking</button>
+
           <div>
             <input type="text" value={Imput} onChange={input} />
             <button onClick={TraerPokemon}>Traer Pokemon</button>

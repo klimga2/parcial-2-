@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import CardsInfo from "./infodata";
 import Pelea from "./Pelea";
 export default function Cards({ img, nombre, Stats }) {
-  console.log(Stats);
   return (
     <Card
       sx={{
