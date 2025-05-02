@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Cards from "../components/Card";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Pelea from "../components/Pelea";
+
 function Batalla() {
   const Pokemonelegifo = useParams();
 
@@ -12,9 +13,10 @@ function Batalla() {
   const [StatsAtaque, setStatsAtaque] = useState();
   const [StatsJugadorHp, setStatsJugadorHp] = useState();
   const [StatsJugadorAtaque, setStatsJugadorAtaque] = useState();
+  const [Imput, setImput] = useState("");
 
   const [Turno, setTurno] = useState(false);
-  const [Ganador, setGanador] = useState(true);
+  const [MostrarGanador, setMostrarGanador] = useState(true);
   const [loading, setloading] = useState(true);
 
   const [PokemonGandor, setPokemonGanador] = useState();
@@ -27,7 +29,9 @@ function Batalla() {
         setStatsJugadorHp(data.stats[0].base_stat);
         setStatsJugadorAtaque(data.stats[1].base_stat);
       });
+  }, []);
 
+  useEffect(() => {
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
@@ -40,7 +44,7 @@ function Batalla() {
         setStatsAtaque(data.stats[1].base_stat);
         setloading(false);
       });
-  }, []);
+  }, [Imput]);
 
   const MulticadorDeAtake = 0.5;
 
@@ -61,27 +65,55 @@ function Batalla() {
     setStatsJugadorHp(NuevoHp);
     setTurno(false);
   }
+
   if (StatsHp <= 0) {
     setPokemonGanador(PokemonJugador);
-    setGanador(false);
     setStastHp(DataPokemons.stats[0].base_stat);
+    setMostrarGanador(false);
   }
   if (StatsJugadorHp <= 0) {
     setPokemonGanador(DataPokemons);
-    setGanador(false);
     setStatsJugadorHp(PokemonJugador.stats[0].base_stat);
+    setMostrarGanador(false);
   }
+  const tu = [];
+  function guardar() {
+    tu.push(PokemonGandor);
+    console.log(tu);
+  }
+
+  const input = (e) => {
+    setImput(e.target.value);
+  };
+  const TraerPokemon = () => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${Imput}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPokemonJugador(data);
+        setStatsJugadorHp(data.stats[0].base_stat);
+        setStatsJugadorAtaque(data.stats[1].base_stat);
+
+        setMostrarGanador(true);
+        setTurno(false);
+      });
+  };
+
   return (
     <>
-      {!Ganador ? (
+      {!MostrarGanador ? (
         <div>
           <p>Ganador</p>
           <Pelea
             img={PokemonGandor.sprites?.front_default}
-            nombre={PokemonGandor.name}
+            Pokemon={PokemonGandor.name}
             Hp={PokemonGandor.stats[0].base_stat}
             Ataque={PokemonGandor.stats[1].base_stat}
           />
+          <button onClick={guardar}>Agregar</button>
+          <div>
+            <input type="text" value={Imput} onChange={input} />
+            <button onClick={TraerPokemon}>Traer Pokemon</button>
+          </div>
         </div>
       ) : (
         <section>
@@ -96,7 +128,7 @@ function Batalla() {
                   Hp={StatsJugadorHp}
                   Ataque={StatsJugadorAtaque}
                   img={PokemonJugador.sprites?.front_default}
-                  nombre={PokemonJugador.name}
+                  Pokemon={PokemonJugador.name}
                 />
                 {!Turno ? (
                   <button onClick={AtaqueMipokemon}>atacar</button>
@@ -111,7 +143,7 @@ function Batalla() {
                   Hp={StatsHp}
                   Ataque={StatsAtaque}
                   img={DataPokemons.sprites.front_default}
-                  nombre={DataPokemons.name}
+                  Pokemon={DataPokemons.name}
                 />
                 {Turno ? (
                   <button onClick={AtaquePokemonEnemigo}>atacar</button>
